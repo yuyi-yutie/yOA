@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4efe5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="yOA">
+  <meta name="format-detection" content="telephone=no">
+  <title>yOA · 计划与监督</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="is-booting">
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-plan" viewBox="0 0 24 24">
+      <path d="M8 4h8M9 3h6a1 1 0 0 1 1 1v1H8V4a1 1 0 0 1 1-1Z" />
+      <path d="M7 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1" />
+      <path d="m8.5 13 2 2 4.5-4.5" />
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+      <path d="M12 3 5 6v5.2c0 4.2 2.8 7.7 7 9.8 4.2-2.1 7-5.6 7-9.8V6l-7-3Z" />
+      <path d="m9 12 2 2 4-4" />
+    </symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5M12 8h.01" />
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24">
+      <rect x="5" y="10" width="14" height="11" rx="3" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3M12 15v2" />
+    </symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24">
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="2.8" />
+    </symbol>
+    <symbol id="icon-eye-off" viewBox="0 0 24 24">
+      <path d="m4 4 16 16M9.9 6.1A9.8 9.8 0 0 1 12 5.9c6 0 9.5 6.1 9.5 6.1a17 17 0 0 1-2.2 3M6.1 8.2A17.6 17.6 0 0 0 2.5 12S6 18.1 12 18.1c1.1 0 2.1-.2 3-.6M10.1 10.2a2.7 2.7 0 0 0 3.7 3.7" />
+    </symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14" />
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24">
+      <path d="M4 7h16M9 7V5h6v2M6.5 7l.8 12h9.4l.8-12M10 11v4M14 11v4" />
+    </symbol>
+    <symbol id="icon-spark" viewBox="0 0 24 24">
+      <path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z" />
+      <path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7L19 16Z" />
+    </symbol>
+    <symbol id="icon-flame" viewBox="0 0 24 24">
+      <path d="M13.5 3.5c.4 3.2-2.4 4.2-2.4 6.4 0 1.2.8 2 1.8 2 1.5 0 2.3-1.5 2.1-3.2 2.6 1.7 3.8 4 3.5 6.5-.4 3.3-2.9 5.3-6.5 5.3s-6.2-2.3-6.5-5.8c-.2-2.8 1.6-5.8 4.6-8.2-.1 1.5.4 2.4 1.1 2.9-.2-2.6 1-4.7 2.3-5.9Z" />
+    </symbol>
+  </svg>
+
+  <div class="boot-screen" id="boot-screen" role="status" aria-label="正在加载">
+    <div class="boot-mark">y<span>OA</span></div>
+    <span class="boot-line"></span>
+  </div>
+
+  <main class="login-view" id="login-view" hidden>
+    <div class="login-deco" aria-hidden="true">
+      <span class="deco-ring deco-ring-a"></span>
+      <span class="deco-ring deco-ring-b"></span>
+      <span class="deco-cross deco-cross-a"></span>
+      <span class="deco-cross deco-cross-b"></span>
+      <span class="deco-word">FOCUS</span>
+    </div>
+
+    <div class="login-content">
+      <div class="login-brand">
+        <span class="brand-y">y</span><span>OA</span>
+        <span class="private-pill">PRIVATE</span>
+      </div>
+
+      <p class="login-kicker">PERSONAL SUPERVISION SYSTEM</p>
+      <h1 class="login-title">把计划，<br><em>变成做过的事。</em></h1>
+      <p class="login-lede">输入访问密钥，进入你的私人计划与监督空间。</p>
+
+      <form class="login-form" id="login-form" novalidate>
+        <label class="field-label" for="access-key">访问密钥</label>
+        <div class="key-field">
+          <svg class="field-icon" aria-hidden="true"><use href="#icon-lock"></use></svg>
+          <input
+            id="access-key"
+            name="key"
+            type="password"
+            inputmode="text"
+            autocomplete="current-password"
+            autocapitalize="none"
+            spellcheck="false"
+            maxlength="128"
+            placeholder="请输入访问密钥"
+            aria-describedby="login-error"
+            required
+          >
+          <button class="reveal-button" id="toggle-key" type="button" aria-label="显示密钥" aria-pressed="false">
+            <svg class="eye-open" aria-hidden="true"><use href="#icon-eye"></use></svg>
+            <svg class="eye-off" aria-hidden="true" hidden><use href="#icon-eye-off"></use></svg>
+          </button>
+        </div>
+        <p class="form-error" id="login-error" role="alert" hidden></p>
+        <button class="login-button" id="login-button" type="submit">
+          <span class="button-label">进入 yOA</span>
+          <span class="button-arrow" aria-hidden="true">
+            <svg><use href="#icon-arrow"></use></svg>
+          </span>
+          <span class="button-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="login-foot"><span class="live-dot"></span>服务端校验 · 仅限授权访问</p>
+    </div>
+  </main>
+
+  <div class="app-view" id="app-view" hidden>
+    <header class="app-topbar">
+      <div class="wordmark" aria-label="yOA">
+        <span class="wordmark-y">y</span><span>OA</span>
+      </div>
+      <div class="topbar-date">
+        <span class="live-dot"></span>
+        <span id="top-date">今天</span>
+      </div>
+    </header>
+
+    <main class="app-main" id="app-main">
+      <article class="page is-active" id="page-plan" data-page="plan" role="tabpanel" aria-labelledby="tab-plan">
+        <header class="page-heading">
+          <p class="page-kicker">PLAN</p>
+          <h1 class="page-title">今天，<br>做点什么？</h1>
+          <p class="page-subtitle">小步推进，比完美计划更重要。</p>
+        </header>
+
+        <section class="progress-card" aria-label="今日计划进度">
+          <div class="progress-top">
+            <span class="card-label card-label-light">今日进度</span>
+            <span class="progress-fraction" id="plan-progress-text">0 / 0</span>
+          </div>
+          <div class="progress-number">
+            <span id="plan-percent">0</span><span class="percent-sign">%</span>
+          </div>
+          <p class="progress-copy" id="plan-progress-copy">还没有计划，从第一件小事开始。</p>
+          <div class="progress-track" role="progressbar" aria-label="计划完成进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="plan-progress-track">
+            <span id="plan-progress-bar"></span>
+          </div>
+        </section>
+
+        <form class="add-plan" id="plan-form">
+          <label class="sr-only" for="plan-input">添加今日计划</label>
+          <input
+            id="plan-input"
+            type="text"
+            maxlength="120"
+            autocomplete="off"
+            placeholder="添加一条今天要做的事…"
+          >
+          <button class="add-button" id="add-plan-button" type="submit" aria-label="添加计划">
+            <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
+          </button>
+        </form>
+
+        <div class="section-head">
+          <h2>今日计划</h2>
+          <span id="plan-count">0 项</span>
+        </div>
+
+        <ul class="plan-list" id="plan-list" aria-live="polite"></ul>
+
+        <div class="empty-state" id="plan-empty">
+          <span class="empty-icon" aria-hidden="true">
+            <svg><use href="#icon-spark"></use></svg>
+          </span>
+          <p>今天还是一张白纸。</p>
+          <span>在上方写下第一件要做的事。</span>
+        </div>
+      </article>
+
+      <article class="page" id="page-supervise" data-page="supervise" role="tabpanel" aria-labelledby="tab-supervise" aria-hidden="true">
+        <header class="page-heading">
+          <p class="page-kicker">SUPERVISE</p>
+          <h1 class="page-title">把注意力，<br>收回来。</h1>
+          <p class="page-subtitle">一次只做一件事，二十五分钟就够了。</p>
+        </header>
+
+        <section class="focus-card" aria-label="专注计时器">
+          <div class="focus-head">
+            <span class="focus-label">专注计时</span>
+            <span class="focus-state" id="focus-state">准备开始</span>
+          </div>
+
+          <div class="focus-visual">
+            <svg class="focus-ring" viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="focus-track" cx="100" cy="100" r="86"></circle>
+              <circle class="focus-fill" id="focus-fill" cx="100" cy="100" r="86"></circle>
+            </svg>
+            <div class="focus-center">
+              <span class="focus-time" id="focus-time">25:00</span>
+              <span class="focus-unit">MINUTES</span>
+            </div>
+          </div>
+
+          <div class="focus-presets" role="group" aria-label="专注时长">
+            <button type="button" data-minutes="25" class="is-selected" aria-pressed="true">25 分钟</button>
+            <button type="button" data-minutes="15" aria-pressed="false">15 分钟</button>
+            <button type="button" data-minutes="5" aria-pressed="false">5 分钟</button>
+          </div>
+
+          <div class="focus-actions">
+            <button type="button" class="focus-primary" id="focus-start">开始专注</button>
+            <button type="button" class="focus-secondary" id="focus-reset">重置</button>
+          </div>
+        </section>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-focus">0</span>
+            <span class="stat-label">今日专注 / 分钟</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-streak">0</span>
+            <span class="stat-label">连续打卡 / 天</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-completed">0</span>
+            <span class="stat-label">今日完成 / 项</span>
+          </div>
+        </div>
+
+        <section class="checkin-card" id="checkin-card" aria-labelledby="checkin-title">
+          <div class="checkin-copy">
+            <span class="card-label">DAILY CHECK-IN</span>
+            <h2 id="checkin-title">今天，稳住。</h2>
+            <p id="checkin-hint">留下一个脚印，让坚持变得看得见。</p>
+          </div>
+          <button type="button" class="checkin-button" id="checkin-button">今日打卡</button>
+          <div class="checkin-stamp" id="checkin-stamp" hidden>
+            <svg aria-hidden="true"><use href="#icon-check"></use></svg>
+            <span>已打卡</span>
+          </div>
+        </section>
+      </article>
+
+      <article class="page" id="page-about" data-page="about" role="tabpanel" aria-labelledby="tab-about" aria-hidden="true">
+        <header class="page-heading about-heading">
+          <p class="page-kicker">ABOUT</p>
+          <div class="about-mark" aria-hidden="true"><span>y</span>OA</div>
+          <h1 class="page-title">一个更安静的<br>个人工作台。</h1>
+          <p class="page-subtitle">计划、专注、打卡，把注意力留给真正重要的事。</p>
+        </header>
+
+        <section class="about-card">
+          <span class="card-label">WHY yOA</span>
+          <h2>少一点忙乱，多一点完成。</h2>
+          <p>yOA 是一份轻量的个人计划与监督工具。没有复杂的项目层级，也不需要漫长的设置，打开就能写下今天，专注一会儿，并留下一次打卡。</p>
+        </section>
+
+        <div class="about-rows">
+          <div class="about-row">
+            <span>版本</span>
+            <strong>0.1.0 · Prototype</strong>
+          </div>
+          <div class="about-row">
+            <span>数据存储</span>
+            <strong>SQLite · 服务端</strong>
+          </div>
+          <div class="about-row">
+            <span>访问方式</span>
+            <strong>密钥登录 · 30 天会话</strong>
+          </div>
+          <div class="about-row">
+            <span>体验设计</span>
+            <strong>Mobile First</strong>
+          </div>
+        </div>
+
+        <button type="button" class="logout-button" id="logout-button">退出登录</button>
+        <p class="about-foot">PRIVATE BY DEFAULT · MADE FOR SMALL STEPS</p>
+      </article>
+    </main>
+
+    <nav class="tabbar" aria-label="主导航" role="tablist">
+      <button type="button" class="tab is-active" id="tab-plan" data-page="plan" role="tab" aria-selected="true" aria-controls="page-plan">
+        <svg aria-hidden="true"><use href="#icon-plan"></use></svg>
+        <span>计划</span>
+      </button>
+      <button type="button" class="tab" id="tab-supervise" data-page="supervise" role="tab" aria-selected="false" aria-controls="page-supervise">
+        <svg aria-hidden="true"><use href="#icon-shield"></use></svg>
+        <span>监督</span>
+      </button>
+      <button type="button" class="tab" id="tab-about" data-page="about" role="tab" aria-selected="false" aria-controls="page-about">
+        <svg aria-hidden="true"><use href="#icon-info"></use></svg>
+        <span>关于</span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

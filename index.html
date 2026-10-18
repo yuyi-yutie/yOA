@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0verday 的网站</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #6a3093 100%);
+    color: #fff;
+    padding: 20px;
+  }
+  .card {
+    text-align: center;
+    padding: 60px 50px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    max-width: 600px;
+  }
+  h1 {
+    font-size: 2.6rem;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+  .clock {
+    font-size: 2rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 32px;
+    color: #a8e6ff;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 10px 30px rgba(0, 114, 255, 0.4);
+  }
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 114, 255, 0.6);
+  }
+  .status {
+    margin-top: 36px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+  .dot {
+    display: inline-block;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #2bff88;
+    margin-right: 6px;
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎉 网站部署成功</h1>
+    <p class="subtitle">欢迎来到 <strong>0verday 的网站</strong><br>这是我在腾讯云 Windows 服务器上从零搭建的第一个页面。</p>
+    <div class="clock" id="clock">--:--:--</div>
+    <a class="btn" href="https://cloud.tencent.com" target="_blank" rel="noopener">腾讯云控制台</a>
+    <p class="status"><span class="dot"></span>服务器运行正常 · IIS 已就绪</p>
+  </div>
+
+  <script>
+    function tick() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('clock').textContent =
+        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
