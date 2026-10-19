@@ -1,0 +1,2 @@
+- Communicates in Chinese and expects replies (including summaries) written in Chinese. Confidence: 0.7
+- Gives very short, high-level directives (e.g. "检查目录下的项目") and expects the agent to explore the project autonomously and report back with a thorough summary plus a list of issues found. Confidence: 0.5

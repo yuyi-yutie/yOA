@@ -1,6 +1,6 @@
 {
   "name": "yoa",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "yOA — 手机优先的个人计划与监督工具",
   "type": "module",

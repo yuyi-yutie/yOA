@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f4efe5">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="yOA">
   <meta name="format-detection" content="telephone=no">
   <title>yOA · 计划与监督</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/styles.css">
 </head>
@@ -58,6 +60,16 @@
     <symbol id="icon-flame" viewBox="0 0 24 24">
       <path d="M13.5 3.5c.4 3.2-2.4 4.2-2.4 6.4 0 1.2.8 2 1.8 2 1.5 0 2.3-1.5 2.1-3.2 2.6 1.7 3.8 4 3.5 6.5-.4 3.3-2.9 5.3-6.5 5.3s-6.2-2.3-6.5-5.8c-.2-2.8 1.6-5.8 4.6-8.2-.1 1.5.4 2.4 1.1 2.9-.2-2.6 1-4.7 2.3-5.9Z" />
     </symbol>
+    <symbol id="icon-repeat" viewBox="0 0 24 24">
+      <path d="M4.5 10a5 5 0 0 1 5-5h8.5M18 2.5 20.5 5 18 7.5" />
+      <path d="M19.5 14a5 5 0 0 1-5 5H6M6 21.5 3.5 19 6 16.5" />
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24">
+      <path d="m6 6 12 12M18 6 6 18" />
+    </symbol>
+    <symbol id="icon-more" viewBox="0 0 24 24">
+      <path d="M12 5.2h.01M12 12h.01M12 18.8h.01" stroke-width="3.2" />
+    </symbol>
   </svg>
 
   <div class="boot-screen" id="boot-screen" role="status" aria-label="正在加载">
@@ -85,6 +97,16 @@
       <p class="login-lede">输入访问密钥，进入你的私人计划与监督空间。</p>
 
       <form class="login-form" id="login-form" novalidate>
+        <input
+          class="sr-only"
+          type="text"
+          name="username"
+          autocomplete="username"
+          value="yoa"
+          tabindex="-1"
+          aria-hidden="true"
+          readonly
+        >
         <label class="field-label" for="access-key">访问密钥</label>
         <div class="key-field">
           <svg class="field-icon" aria-hidden="true"><use href="#icon-lock"></use></svg>
@@ -116,7 +138,7 @@
         </button>
       </form>
 
-      <p class="login-foot"><span class="live-dot"></span>服务端校验 · 仅限授权访问</p>
+      <p class="login-foot"><span class="live-dot"></span>服务端 scrypt 校验 · 仅限授权访问</p>
     </div>
   </main>
 
@@ -181,6 +203,12 @@
           <p>今天还是一张白纸。</p>
           <span>在上方写下第一件要做的事。</span>
         </div>
+
+        <button type="button" class="recurring-manage" id="recurring-manage" hidden>
+          <svg aria-hidden="true"><use href="#icon-repeat"></use></svg>
+          <span>重复计划</span>
+          <span class="recurring-manage-count" id="recurring-count">0</span>
+        </button>
       </article>
 
       <article class="page" id="page-supervise" data-page="supervise" role="tabpanel" aria-labelledby="tab-supervise" aria-hidden="true">
@@ -217,6 +245,8 @@
             <button type="button" class="focus-primary" id="focus-start">开始专注</button>
             <button type="button" class="focus-secondary" id="focus-reset">重置</button>
           </div>
+
+          <p class="focus-note">锁屏或切到后台也会继续计时，授权后完成时会发送系统通知。</p>
         </section>
 
         <div class="stat-grid">
@@ -265,7 +295,7 @@
         <div class="about-rows">
           <div class="about-row">
             <span>版本</span>
-            <strong>0.1.0 · Prototype</strong>
+            <strong>0.2.0 · Recur &amp; Sync</strong>
           </div>
           <div class="about-row">
             <span>数据存储</span>
@@ -273,13 +303,18 @@
           </div>
           <div class="about-row">
             <span>访问方式</span>
-            <strong>密钥登录 · 30 天会话</strong>
+            <strong>scrypt 哈希 · 30 天会话</strong>
           </div>
           <div class="about-row">
-            <span>体验设计</span>
-            <strong>Mobile First</strong>
+            <span>专注记录</span>
+            <strong>服务端权威计时</strong>
           </div>
         </div>
+
+        <button type="button" class="about-action" id="change-key-button">
+          <svg aria-hidden="true"><use href="#icon-lock"></use></svg>
+          <span>修改访问密钥</span>
+        </button>
 
         <button type="button" class="logout-button" id="logout-button">退出登录</button>
         <p class="about-foot">PRIVATE BY DEFAULT · MADE FOR SMALL STEPS</p>
@@ -303,6 +338,21 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="sheet-layer" id="sheet-layer" hidden>
+    <div class="sheet-backdrop" data-sheet-close="true"></div>
+    <section class="sheet" id="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <span class="sheet-handle" aria-hidden="true"></span>
+      <header class="sheet-head">
+        <h2 class="sheet-title" id="sheet-title">添加计划</h2>
+        <button type="button" class="sheet-close" data-sheet-close="true" aria-label="关闭">
+          <svg aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+      </header>
+      <div class="sheet-body" id="sheet-body"></div>
+      <footer class="sheet-actions" id="sheet-actions"></footer>
+    </section>
+  </div>
 
   <script src="/app.js" defer></script>
 </body>
